@@ -34,16 +34,16 @@ declare module __ReactDnd {
     // Top-level API
     // ----------------------------------------------------------------------
 
-    export function DragSource<P>(
+    export function DragSource<P, S>(
         type: Identifier | ((props: P) => Identifier),
-        spec: DragSourceSpec<P>,
+        spec: DragSourceSpec<P, S>,
         collect: DragSourceCollector,
         options?: DndOptions<P>
     ): (componentClass: React.ComponentClass<P> | React.StatelessComponent<P>) => DndComponentClass<P>;
 
-    export function DropTarget<P>(
+    export function DropTarget<P, S>(
         types: Identifier | Identifier[] | ((props: P) => Identifier | Identifier[]),
-        spec: DropTargetSpec<P>,
+        spec: DropTargetSpec<P, S>,
         collect: DropTargetCollector,
         options?: DndOptions<P>
     ): (componentClass: React.ComponentClass<P> | React.StatelessComponent<P>) => DndComponentClass<P>;
@@ -79,9 +79,9 @@ declare module __ReactDnd {
     // DragSource
     // ----------------------------------------------------------------------
 
-    interface DragSourceSpec<P> {
-        beginDrag(props: P, monitor?: DragSourceMonitor, component?: React.Component<P>): Object;
-        endDrag?(props: P, monitor?: DragSourceMonitor, component?: React.Component<P>): void;
+    interface DragSourceSpec<P, S> {
+        beginDrag(props: P, monitor?: DragSourceMonitor, component?: React.Component<P, S>): Object;
+        endDrag?(props: P, monitor?: DragSourceMonitor, component?: React.Component<P, S>): void;
         canDrag?(props: P, monitor?: DragSourceMonitor): boolean;
         isDragging?(props: P, monitor?: DragSourceMonitor): boolean;
     }
@@ -125,9 +125,9 @@ declare module __ReactDnd {
     /// DropTarget
     // ----------------------------------------------------------------------
 
-    interface DropTargetSpec<P> {
-        drop?(props: P, monitor?: DropTargetMonitor, component?: React.Component<P>): Object|void;
-        hover?(props: P, monitor?: DropTargetMonitor, component?: React.Component<P>): void;
+    interface DropTargetSpec<P, S> {
+        drop?(props: P, monitor?: DropTargetMonitor, component?: React.Component<P, S>): Object|void;
+        hover?(props: P, monitor?: DropTargetMonitor, component?: React.Component<P, S>): void;
         canDrop?(props: P, monitor?: DropTargetMonitor): boolean;
     }
 
